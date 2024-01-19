@@ -16,7 +16,11 @@ export default class FastifyServer {
     }
 
     public run(): void {
-        this.server.listen({ port: this.port })
+        this.server.listen({ port: this.port }, (error: any) => {
+            if (error) {
+                process.exit(1)
+            }
+        })
     }
 
     private controllers(
@@ -38,6 +42,9 @@ export default class FastifyServer {
             },
             disableRequestLogging: true
         })
+
+        app.register(import('@fastify/cors'))
+        app.register(import('@fastify/cookie'))
 
         this.controllers(app)
 

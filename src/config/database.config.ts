@@ -9,5 +9,6 @@ export const connect = async (logger: PinoLogger) => {
         })
         .catch(err => {
             logger.error(`Failed to connect to DB: ${err.message}`)
+            process.exit(1)
         })
 }
